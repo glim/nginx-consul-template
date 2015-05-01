@@ -1,0 +1,37 @@
+### Foo ###
+
+upstream foo {
+  least_conn;
+  {{range service "foo"}}server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+  {{else}}server 127.0.0.1:65535; # force a 502{{end}}
+}
+
+server {
+  listen 80;
+  server_name foo.dev;
+
+  location / {
+    proxy_pass http://foo;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+}
+
+### Bar ###
+upstream bar {
+  least_conn;
+  {{range service "bar"}}server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+  {{else}}server 127.0.0.1:65535; # force a 502{{end}}
+}
+server {
+  listen 80;
+  server_name bar.dev;
+
+  location / {
+    proxy_pass http://bar;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+}
