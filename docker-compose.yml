@@ -27,9 +27,6 @@ nginx:
     - 443:443
   links:
     - consul
-  volumes:
-    - "templates:/etc/consul-template/templates"
-    - "consul-template.cfg:/etc/consul-template/config.cfg"
   environment:
     SERVICE_NAME: nginx
 
@@ -38,11 +35,11 @@ foo:
   environment:
     SERVICE_NAME: foo
   ports:
-    - "80"
+  - "80"
 
 bar:
   image: tutum/hello-world
   environment:
     SERVICE_NAME: bar
   ports:
-    - "80"
+  - "80"

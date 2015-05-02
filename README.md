@@ -27,9 +27,15 @@ You can mount your config files as extra volumes
       
 ## Testing with docker-compose
 	$ docker-compose up
+
+If you are using boot2docker your docker IP might look like this 192.168.59.103.
+Add the following to your /etc/hosts file.
+
+	192.168.59.103  foo.dev
+	192.168.59.103  bar.dev
 	
-- Hit http://foo.dev (should point to your docker daemon ip)
-- Hit http://bar.dev (should point to your docker daemon ip)
+- Hit http://foo.dev
+- Hit http://bar.dev
 
 ## License
 
