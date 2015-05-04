@@ -4,8 +4,8 @@ FROM ubuntu:15.04
 MAINTAINER Andrew Teil <andrexus@gmail.com>
 
 ENV CONSUL_TEMPLATE_VERSION 0.9.0
-ENV CONSUL_TEMPLATE_URL https://github.com/hashicorp/consul-template/releases/download/v0.9.0/consul-template_0.9.0_linux_amd64.tar.gz
-# ENV CONSUL_TEMPLATE_URL "https://github.com/hashicorp/consul-template/releases/download/v"$CONSUL_TEMPLATE_VERSION"/consul-template_"$CONSUL_TEMPLATE_VERSION"_linux_amd64.tar.gz"
+#ENV CONSUL_TEMPLATE_URL https://github.com/hashicorp/consul-template/releases/download/v0.9.0/consul-template_0.9.0_linux_amd64.tar.gz
+ENV CONSUL_TEMPLATE_URL "https://github.com/hashicorp/consul-template/releases/download/v${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.tar.gz"
 
 # Install curl nginx-extras and consul-template
 RUN \
