@@ -1,16 +1,15 @@
-# nginx web/proxy server (extended version) with consul-template bundled
+# nginx web/proxy server with consul-template bundled
 
-FROM ubuntu:15.04
-MAINTAINER Andrew Teil <andrexus@gmail.com>
+FROM ubuntu:trusty
+MAINTAINER Jameson Holden <me@jameson.cc>
 
 ENV CONSUL_TEMPLATE_VERSION 0.9.0
-#ENV CONSUL_TEMPLATE_URL https://github.com/hashicorp/consul-template/releases/download/v0.9.0/consul-template_0.9.0_linux_amd64.tar.gz
 ENV CONSUL_TEMPLATE_URL https://github.com/hashicorp/consul-template/releases/download/v${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.tar.gz
 
 # Install curl nginx-extras and consul-template
 RUN \
   apt-get update && apt-get upgrade -y --no-install-recommends && \
-  apt-get -y install curl nginx-extras && \
+  apt-get -y install curl nginx && \
   rm -rf /etc/nginx/sites-enabled/* && \
   rm -rf /var/lib/apt/lists/* && \
   curl -L $CONSUL_TEMPLATE_URL | tar -C /usr/local/bin --strip-components 1 -zxf -
@@ -24,6 +23,7 @@ RUN \
 ADD start.sh /srv/start.sh
 ADD consul-template.cfg /etc/consul-template/config.cfg
 ADD templates/ /etc/consul-template/templates/
+ADD nginx.conf /etc/nginx/nginx.conf
 
 VOLUME ["/var/cache/nginx"]
 
